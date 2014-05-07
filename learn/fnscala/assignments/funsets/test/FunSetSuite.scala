@@ -78,6 +78,8 @@ class FunSetSuite extends FunSuite {
     val s2 = singletonSet(2)
     val s3 = singletonSet(3)
 
+    val negBoundSet = singletonSet(-1000)
+    val s0 = singletonSet(0)
 
   }
 
@@ -170,7 +172,33 @@ class FunSetSuite extends FunSuite {
     }
   }
 
+  test("forall (1,2,3), x<4 returns true") {
+    new TestSets {
+      val a = union(s1, s2)
+      val b = union(a, s3)
 
+      assert(forall(b, x => x < 4), "Forall")
+    }
+  }
+
+  test("forall (-1000, 0), x<1000 returns true") {
+    new TestSets {
+      val a = union(negBoundSet, s0)
+
+      assert(forall(a, x => x < 1000), "Forall")
+    }
+  }
+
+  test("forall (1,2,3)->even returns true") {
+    new TestSets {
+      val a = union(s1, s2)
+      val b = union(a, s3)
+
+      val c = filter(b, x => x % 2 == 0)
+
+      assert(forall(c, x => x % 2 == 0), "Forall")
+    }
+  }
 
   test("exists (1,2,3), x>1 returns true") {
     new TestSets {
@@ -195,5 +223,22 @@ class FunSetSuite extends FunSuite {
     }
   }
 
+  test("map (1,2,3,5,7,1000), x returns -x") {
+    new TestSets {
+      val a = union(singletonSet(1), singletonSet(2))
+      val b = union(a, singletonSet(3))
+      val c = union(b, singletonSet(5))
+      val d = union(c, singletonSet(7))
+      val e = union(d, singletonSet(1000))
 
+      val f = map(e, x => -x)
+
+      assert(contains(f, -1), "Map 1")
+      assert(contains(f, -2), "Map 2")
+      assert(contains(f, -3), "Map 3")
+      assert(contains(f, -5), "Map 5")
+      assert(contains(f, -7), "Map 7")
+      assert(contains(f, -1000), "Map 1000")
+    }
+  }
 }
