@@ -1,5 +1,4 @@
 
-
 def r_count_inversions(a):
 	if len(a) <= 1:
 		return (a,0)
