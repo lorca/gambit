@@ -23,6 +23,10 @@ def median_of_three_pivot(a, l, r):
     p = t[1][2]
     swap(a, l, p)
 
+def rand_pivot(a, l, r):
+    from random import randint
+    swap(a, l, randint(l, r - 1))
+
 def partition(a, l, r):
     p = a[l]
     i = l + 1
@@ -45,24 +49,28 @@ def run_assignment(filename):
     l_ints = copy(ints)
     r_ints = copy(ints)
     m_ints = copy(ints)
+    x_ints = copy(ints)
 
     l_ans = quicksort(l_ints, 0, len(l_ints), left_pivot)
     r_ans = quicksort(r_ints, 0, len(r_ints), right_pivot)
     m_ans = quicksort(m_ints, 0, len(m_ints), median_of_three_pivot)
+    x_ans = quicksort(x_ints, 0, len(x_ints), rand_pivot)
     
     sorted_ints = copy(ints)
     sorted_ints.sort()
     assert l_ints == sorted_ints
     assert r_ints == sorted_ints
     assert m_ints == sorted_ints
+    assert x_ints == sorted_ints
     
-    return (filename,l_ans,r_ans,m_ans)
+    return (filename,l_ans,r_ans,m_ans,x_ans)
 
-print run_assignment("/Users/admin/Downloads/10.txt")
-print run_assignment("/Users/admin/Downloads/100.txt")
-print run_assignment("/Users/admin/Downloads/1000.txt")
-print run_assignment("/Users/admin/Downloads/IntegerArray.txt")
-print run_assignment("/Users/admin/Downloads/QuickSort.txt")
+if __name__ == "__main__":
+    print run_assignment("/Users/admin/Downloads/10.txt")
+    print run_assignment("/Users/admin/Downloads/100.txt")
+    print run_assignment("/Users/admin/Downloads/1000.txt")
+    # print run_assignment("/Users/admin/Downloads/IntegerArray.txt")
+    print run_assignment("/Users/admin/Downloads/QuickSort.txt")
 
 
 
